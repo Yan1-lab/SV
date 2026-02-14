@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Kiara 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        /* --- ESTILOS GENERALES --- */
+        :root {
+            --primary: #ff4d6d;
+            --secondary: #ff8fa3;
+            --bg-color: #fff0f3;
+            --glass: rgba(255, 255, 255, 0.85);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            overflow: hidden; /* Evitar scroll */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            flex-direction: column;
+        }
+
+        /* --- FONDO ANIMADO DE CORAZONES --- */
+        .bg-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .heart-bg {
+            position: absolute;
+            bottom: -10vh;
+            background-color: var(--secondary);
+            display: inline-block;
+            height: 30px;
+            width: 30px;
+            margin: 0 10px;
+            transform: rotate(-45deg);
+            animation: float 6s linear infinite;
+            opacity: 0.6;
+        }
+
+        .heart-bg::before, .heart-bg::after {
+            content: "";
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: var(--secondary);
+            border-radius: 50%;
+        }
+
+        .heart-bg::before { top: -15px; left: 0; }
+        .heart-bg::after { left: 15px; top: 0; }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(-45deg) scale(0.8); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-120vh) rotate(-45deg) scale(1.2); opacity: 0; }
+        }
+
+        /* --- CONTENEDOR PRINCIPAL (CARTA) --- */
+        .container {
+            background: var(--glass);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2);
+            backdrop-filter: blur(10px);
+            max-width: 90%;
+            width: 400px;
+            transition: all 0.5s ease;
+            position: relative;
+            border: 2px solid white;
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        img.sticker {
+            width: 120px;
+            height: auto;
+            margin-bottom: 15px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* --- BOTONES --- */
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .btn-yes {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-yes:hover {
+            background-color: #d63354;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        .btn-no {
+            background-color: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-no:hover {
+            background-color: #fff0f3;
+        }
+
+        /* --- PANTALLAS (OCULTAS POR DEFECTO) --- */
+        .screen {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- CUENTA REGRESIVA --- */
+        #timer {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 20px 0;
+        }
+
+        /* --- EFECTOS FINALES --- */
+        #confetti-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        /* Control de Música */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 10px;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            z-index: 200;
+            font-size: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="bg-hearts" id="bg-hearts"></div>
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="music-control" onclick="toggleMusic()">🎵</div>
+    <audio id="bg-music" loop>
+        <source src="musica.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+        
+        <div id="screen-1" class="screen active">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2QzZGNmNjY0YzQ2M2E4MzM2MmE4MzM2MmE4MzM2MmE4MzM2MmE4ZCZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PXM/cLS1cfxvGOPVpf9w3y/giphy.gif" alt="Cute Heart" class="sticker">
+            <h1>Kiara...<br>¿Quieres ser mi San Valentín? 💗</h1>
+            <div class="btn-group">
+                <button class="btn-no" onclick="nextScreen(2)" onmouseover="shakeBtn(this)">NO</button>
+                <button class="btn-yes" onclick="goSuccess()">SÍ</button>
+            </div>
+        </div>
+
+        <div id="screen-2" class="screen">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDM4ZjQ2M2E4MzM2MmE4MzM2MmE4MzM2MmE4MzM2MmE4MzM2MmE4ZCZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PXM/N1cwKc8zU6x6o/giphy.gif" alt="Sad Bear" class="sticker">
+            <h1>¿Estás segura? 🥺</h1>
+            <p>Piénsalo bien...</p>
+            <div class="btn-group">
+                <button class="btn-no" onclick="nextScreen(3)">NO</button>
+                <button class="btn-yes" onclick="goSuccess()">SÍ</button>
+            </div>
+        </div>
+
+        <div id="screen-3" class="screen">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2QzZGNmNjY0YzQ2M2E4MzM2MmE4MzM2MmE4MzM2MmE4MzM2MmE4ZCZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PXM/OPU6wzx8J92NO/giphy.gif" alt="Crying" class="sticker">
+            <h1>¿Realmente segura? 💔</h1>
+            <p>Mira que me voy a poner triste...</p>
+            <div class="btn-group">
+                <button class="btn-no" onclick="startTimeoutRoutine()">NO</button>
+                <button class="btn-yes" onclick="goSuccess()">SÍ</button>
+            </div>
+        </div>
+
+        <div id="screen-4" class="screen">
+            <h1>Te pregunto de nuevo por si se te olvidó... ⏳</h1>
+            <div id="timer">10</div>
+            <p>Reiniciando el sistema del amor...</p>
+        </div>
+
+        <div id="screen-5" class="screen">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2QzZGNmNjY0YzQ2M2E4MzM2MmE4MzM2MmE4MzM2MmE4MzM2MmE4ZCZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PXM/T86i6yDyOYz7J6dPhf/giphy.gif" alt="Love" class="sticker">
+            <h1>💖 ¡Ya lo sabía! 💖</h1>
+            <p>Eres la mejor mi negrita, te amoo mucho.</p>
+            <p>Nos vemos pronto para celebrar 🍷🌹</p>
+        </div>
+
+    </div>
+
+    <script>
+        // --- VARIABLES Y CONFIGURACIÓN ---
+        let currentScale = 1; // Para hacer crecer el botón SÍ
+        const yesButtons = document.querySelectorAll('.btn-yes');
+        const bgMusic = document.getElementById('bg-music');
+        
+        // --- GENERADOR DE CORAZONES DE FONDO ---
+        function createHearts() {
+            const container = document.getElementById('bg-hearts');
+            const heartCount = 20;
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart-bg');
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = Math.random() * 3 + 4 + 's';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(heart);
+            }
+        }
+        createHearts();
+
+        // --- NAVEGACIÓN ENTRE PANTALLAS ---
+        function nextScreen(screenNumber) {
+            // Ocultar todas las pantallas
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            // Mostrar la deseada
+            document.getElementById('screen-' + screenNumber).classList.add('active');
+            
+            // Hacer crecer el botón SÍ en todas las pantallas
+            growYesBtn();
+            
+            // Intentar reproducir música si no ha empezado (interacción del usuario)
+            playMusicSafe();
+        }
+
+        // --- RUTINA DE CUENTA REGRESIVA (PANTALLA 4) ---
+        function startTimeoutRoutine() {
+            nextScreen(4); // Mostrar pantalla de timer
+            let timeLeft = 10;
+            const timerElement = document.getElementById('timer');
+            
+            const countdown = setInterval(() => {
+                timeLeft--;
+                timerElement.innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+                    resetProposal();
+                }
+            }, 1000);
+        }
+
+        // --- RESETEAR AL INICIO ---
+        function resetProposal() {
+            currentScale = 1; // Resetear tamaño del botón
+            yesButtons.forEach(btn => btn.style.transform = `scale(1)`);
+            nextScreen(1);
+        }
+
+        // --- FUNCIONES VISUALES (BOTONES) ---
+        function growYesBtn() {
+            currentScale += 0.2; // Crece un 20% cada vez
+            yesButtons.forEach(btn => {
+                btn.style.transform = `scale(${currentScale})`;
+            });
+        }
+
+        function shakeBtn(btn) {
+            // Pequeña animación de vibración al pasar el mouse por NO
+            btn.style.transform = "translateX(" + (Math.random() * 10 - 5) + "px)";
+            setTimeout(() => {
+                btn.style.transform = "translateX(0)";
+            }, 200);
+        }
+
+        // --- PANTALLA DE ÉXITO ---
+        function goSuccess() {
+            playMusicSafe();
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen-5').classList.add('active');
+            startConfetti();
+        }
+
+        // --- MÚSICA ---
+        function toggleMusic() {
+            if (bgMusic.paused) {
+                bgMusic.play();
+            } else {
+                bgMusic.pause();
+            }
+        }
+        
+        function playMusicSafe() {
+            // Los navegadores bloquean autoplay hasta que el usuario interactúa
+            bgMusic.play().catch(error => {
+                console.log("Esperando interacción para reproducir música");
+            });
+        }
+
+        // --- EFECTO CONFETI (CANVAS SIMPLE) ---
+        function startConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const pieces = [];
+            const colors = ['#ff4d6d', '#ff8fa3', '#ffffff', '#ffd700'];
+
+            for (let i = 0; i < 300; i++) {
+                pieces.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    size: Math.random() * 10 + 5,
+                    speed: Math.random() * 5 + 2,
+                    angle: Math.random() * 360
+                });
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                pieces.forEach(p => {
+                    ctx.fillStyle = p.color;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    p.y += p.speed;
+                    p.x += Math.sin(p.angle) * 2;
+                    if (p.y > canvas.height) p.y = -10;
+                });
+                requestAnimationFrame(draw);
+            }
+            draw();
+        }
+
+        // Ajustar canvas al cambiar tamaño de ventana
+        window.addEventListener('resize', () => {
+            const canvas = document.getElementById('confetti-canvas');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
