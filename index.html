@@ -11,7 +11,7 @@
             --primary: #ff4d6d;
             --secondary: #ff8fa3;
             --bg-color: #fff0f3;
-            --glass: rgba(255, 255, 255, 0.85);
+            --glass: rgba(255, 255, 255, 0.90);
         }
 
         body {
@@ -19,7 +19,7 @@
             padding: 0;
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg-color);
-            overflow: hidden; /* Evitar scroll */
+            overflow: hidden;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -28,7 +28,7 @@
             flex-direction: column;
         }
 
-        /* --- FONDO ANIMADO DE CORAZONES --- */
+        /* --- FONDO ANIMADO --- */
         .bg-hearts {
             position: absolute;
             top: 0;
@@ -70,7 +70,7 @@
             100% { transform: translateY(-120vh) rotate(-45deg) scale(1.2); opacity: 0; }
         }
 
-        /* --- CONTENEDOR PRINCIPAL (CARTA) --- */
+        /* --- CONTENEDOR PRINCIPAL --- */
         .container {
             background: var(--glass);
             padding: 40px;
@@ -82,53 +82,50 @@
             transition: all 0.5s ease;
             position: relative;
             border: 2px solid white;
+            z-index: 10;
         }
 
         h1 {
             font-family: 'Pacifico', cursive;
             color: var(--primary);
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             margin-bottom: 20px;
             line-height: 1.2;
         }
 
         p {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #555;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
+        /* Estilo de los Gifs */
         img.sticker {
-            width: 120px;
+            width: 180px; /* Tamaño ajustado */
             height: auto;
             margin-bottom: 15px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            border-radius: 10px;
         }
 
         /* --- BOTONES --- */
         .btn-group {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             flex-wrap: wrap;
+            align-items: center;
         }
 
         button {
-            padding: 15px 30px;
-            font-size: 1.2rem;
+            padding: 12px 25px;
+            font-size: 1rem;
             border: none;
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 600;
             font-family: 'Poppins', sans-serif;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         .btn-yes {
@@ -152,7 +149,7 @@
             background-color: #fff0f3;
         }
 
-        /* --- PANTALLAS (OCULTAS POR DEFECTO) --- */
+        /* --- PANTALLAS --- */
         .screen {
             display: none;
             animation: fadeIn 0.5s ease;
@@ -175,7 +172,7 @@
             margin: 20px 0;
         }
 
-        /* --- EFECTOS FINALES --- */
+        /* --- CANVAS CONFETI --- */
         #confetti-canvas {
             position: absolute;
             top: 0;
@@ -192,12 +189,12 @@
             bottom: 20px;
             right: 20px;
             background: white;
-            padding: 10px;
+            padding: 12px;
             border-radius: 50%;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             cursor: pointer;
             z-index: 200;
-            font-size: 20px;
+            font-size: 24px;
         }
 
     </style>
@@ -215,18 +212,18 @@
     <div class="container">
         
         <div id="screen-1" class="screen active">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2QzZGNmNjY0YzQ2M2E4MzM2MmE4MzM2MmE4MzM2MmE4MzM2MmE4ZCZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PXM/cLS1cfxvGOPVpf9w3y/giphy.gif" alt="Cute Heart" class="sticker">
+            <img src="https://i.pinimg.com/originals/f6/a5/f7/f6a5f7ddff1f05cbcc560251b9e27c6e.gif" alt="Osito Pregunta" class="sticker">
             <h1>Kiara...<br>¿Quieres ser mi San Valentín? 💗</h1>
             <div class="btn-group">
-                <button class="btn-no" onclick="nextScreen(2)" onmouseover="shakeBtn(this)">NO</button>
+                <button class="btn-no" onclick="nextScreen(2)" onmouseover="moveBtn(this)">NO</button>
                 <button class="btn-yes" onclick="goSuccess()">SÍ</button>
             </div>
         </div>
 
         <div id="screen-2" class="screen">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDM4ZjQ2M2E4MzM2MmE4MzM2MmE4MzM2MmE4MzM2MmE4MzM2MmE4ZCZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PXM/N1cwKc8zU6x6o/giphy.gif" alt="Sad Bear" class="sticker">
+            <img src="https://i.pinimg.com/originals/77/6b/21/776b215bed3deeef47fd3aa657685a18.gif" alt="Osito Triste" class="sticker">
             <h1>¿Estás segura? 🥺</h1>
-            <p>Piénsalo bien...</p>
+            <p>Mira que soy buena opción...</p>
             <div class="btn-group">
                 <button class="btn-no" onclick="nextScreen(3)">NO</button>
                 <button class="btn-yes" onclick="goSuccess()">SÍ</button>
@@ -234,9 +231,9 @@
         </div>
 
         <div id="screen-3" class="screen">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2QzZGNmNjY0YzQ2M2E4MzM2MmE4MzM2MmE4MzM2MmE4MzM2MmE4ZCZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PXM/OPU6wzx8J92NO/giphy.gif" alt="Crying" class="sticker">
+            <img src="https://i.pinimg.com/originals/e4/15/27/e4152771cc4e0d9b439c6d3967323862.gif" alt="Osito Llorando" class="sticker">
             <h1>¿Realmente segura? 💔</h1>
-            <p>Mira que me voy a poner triste...</p>
+            <p>Mi corazoncito no aguanta esto...</p>
             <div class="btn-group">
                 <button class="btn-no" onclick="startTimeoutRoutine()">NO</button>
                 <button class="btn-yes" onclick="goSuccess()">SÍ</button>
@@ -246,29 +243,28 @@
         <div id="screen-4" class="screen">
             <h1>Te pregunto de nuevo por si se te olvidó... ⏳</h1>
             <div id="timer">10</div>
-            <p>Reiniciando el sistema del amor...</p>
+            <p>Recalculando tus sentimientos...</p>
         </div>
 
         <div id="screen-5" class="screen">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2QzZGNmNjY0YzQ2M2E4MzM2MmE4MzM2MmE4MzM2MmE4MzM2MmE4ZCZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PXM/T86i6yDyOYz7J6dPhf/giphy.gif" alt="Love" class="sticker">
-            <h1>💖 ¡Ya lo sabía! 💖</h1>
+            <img src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3a325086d7732d8478648e423631.gif" alt="Amor" class="sticker">
+            <h1>💖 ¡SABÍA QUE DIRÍAS QUE SÍ! 💖</h1>
             <p>Eres la mejor mi negrita, te amoo mucho.</p>
-            <p>Nos vemos pronto para celebrar 🍷🌹</p>
+            <p>¡Nos vemos pronto! 🍷🌹</p>
         </div>
 
     </div>
 
     <script>
-        // --- VARIABLES Y CONFIGURACIÓN ---
-        let currentScale = 1; // Para hacer crecer el botón SÍ
+        // --- LÓGICA DEL SITIO ---
+        let currentScale = 1; 
         const yesButtons = document.querySelectorAll('.btn-yes');
         const bgMusic = document.getElementById('bg-music');
         
-        // --- GENERADOR DE CORAZONES DE FONDO ---
+        // Corazones flotantes
         function createHearts() {
             const container = document.getElementById('bg-hearts');
-            const heartCount = 20;
-            for (let i = 0; i < heartCount; i++) {
+            for (let i = 0; i < 20; i++) {
                 const heart = document.createElement('div');
                 heart.classList.add('heart-bg');
                 heart.style.left = Math.random() * 100 + 'vw';
@@ -279,23 +275,23 @@
         }
         createHearts();
 
-        // --- NAVEGACIÓN ENTRE PANTALLAS ---
+        // Cambiar pantalla
         function nextScreen(screenNumber) {
-            // Ocultar todas las pantallas
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            // Mostrar la deseada
             document.getElementById('screen-' + screenNumber).classList.add('active');
             
-            // Hacer crecer el botón SÍ en todas las pantallas
-            growYesBtn();
-            
-            // Intentar reproducir música si no ha empezado (interacción del usuario)
+            // Hacer crecer el botón SI
+            currentScale += 0.3; // Aumenta más notablemente
+            yesButtons.forEach(btn => {
+                btn.style.transform = `scale(${currentScale})`;
+            });
+
             playMusicSafe();
         }
 
-        // --- RUTINA DE CUENTA REGRESIVA (PANTALLA 4) ---
+        // Timer de 10 segundos
         function startTimeoutRoutine() {
-            nextScreen(4); // Mostrar pantalla de timer
+            nextScreen(4);
             let timeLeft = 10;
             const timerElement = document.getElementById('timer');
             
@@ -309,30 +305,23 @@
             }, 1000);
         }
 
-        // --- RESETEAR AL INICIO ---
+        // Volver al inicio
         function resetProposal() {
-            currentScale = 1; // Resetear tamaño del botón
+            currentScale = 1;
             yesButtons.forEach(btn => btn.style.transform = `scale(1)`);
-            nextScreen(1);
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen-1').classList.add('active');
         }
 
-        // --- FUNCIONES VISUALES (BOTONES) ---
-        function growYesBtn() {
-            currentScale += 0.2; // Crece un 20% cada vez
-            yesButtons.forEach(btn => {
-                btn.style.transform = `scale(${currentScale})`;
-            });
+        // Mover botón NO (Efecto divertido)
+        function moveBtn(btn) {
+            btn.style.position = 'relative';
+            const randomX = Math.floor(Math.random() * 100) - 50; 
+            const randomY = Math.floor(Math.random() * 100) - 50;
+            btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
         }
 
-        function shakeBtn(btn) {
-            // Pequeña animación de vibración al pasar el mouse por NO
-            btn.style.transform = "translateX(" + (Math.random() * 10 - 5) + "px)";
-            setTimeout(() => {
-                btn.style.transform = "translateX(0)";
-            }, 200);
-        }
-
-        // --- PANTALLA DE ÉXITO ---
+        // Éxito
         function goSuccess() {
             playMusicSafe();
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -340,7 +329,7 @@
             startConfetti();
         }
 
-        // --- MÚSICA ---
+        // Música
         function toggleMusic() {
             if (bgMusic.paused) {
                 bgMusic.play();
@@ -348,57 +337,48 @@
                 bgMusic.pause();
             }
         }
-        
+
         function playMusicSafe() {
-            // Los navegadores bloquean autoplay hasta que el usuario interactúa
-            bgMusic.play().catch(error => {
-                console.log("Esperando interacción para reproducir música");
-            });
+            bgMusic.play().catch(e => console.log("Interacción requerida para audio"));
         }
 
-        // --- EFECTO CONFETI (CANVAS SIMPLE) ---
+        // Confeti simple
         function startConfetti() {
             const canvas = document.getElementById('confetti-canvas');
             const ctx = canvas.getContext('2d');
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+            
+            const particles = [];
+            const colors = ['#ff0a54', '#ff477e', '#ff7096', '#ff85a1', '#fbb1bd', '#f9bec7'];
 
-            const pieces = [];
-            const colors = ['#ff4d6d', '#ff8fa3', '#ffffff', '#ffd700'];
-
-            for (let i = 0; i < 300; i++) {
-                pieces.push({
+            for(let i=0; i<300; i++) {
+                particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height - canvas.height,
+                    size: Math.random() * 8 + 2,
                     color: colors[Math.floor(Math.random() * colors.length)],
-                    size: Math.random() * 10 + 5,
-                    speed: Math.random() * 5 + 2,
-                    angle: Math.random() * 360
+                    speed: Math.random() * 3 + 2,
+                    angle: Math.random() * 6.2
                 });
             }
 
             function draw() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                pieces.forEach(p => {
+                particles.forEach(p => {
                     ctx.fillStyle = p.color;
                     ctx.beginPath();
                     ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
                     ctx.fill();
                     p.y += p.speed;
-                    p.x += Math.sin(p.angle) * 2;
-                    if (p.y > canvas.height) p.y = -10;
+                    p.x += Math.sin(p.angle);
+                    
+                    if(p.y > canvas.height) p.y = -10;
                 });
                 requestAnimationFrame(draw);
             }
             draw();
         }
-
-        // Ajustar canvas al cambiar tamaño de ventana
-        window.addEventListener('resize', () => {
-            const canvas = document.getElementById('confetti-canvas');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
     </script>
 </body>
 </html>
